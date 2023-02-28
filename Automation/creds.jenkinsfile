@@ -1,0 +1,63 @@
+pipeline {
+  agent any
+  
+  parameters {
+    booleanParam(name: 'Static_Check', defaultValue: false, description: 'Check this box to enable static code analysis')
+    booleanParam(name: 'QA', defaultValue: false, description: 'Check this box to enable QA testing')
+    booleanParam(name: 'Unit_Test', defaultValue: false, description: 'Check this box to enable unit testing')
+    string(name: 'Success_Email', defaultValue: '', description: 'Enter the email address to notify on successful build')
+    string(name: 'Failure_Email', defaultValue: '', description: 'Enter the email address to notify on failed build')
+  }
+  
+  stages {
+    stage('Build') {
+      steps {
+        // Build your code here
+      }
+    }
+    
+    stage('Static Code Analysis') {
+      when {
+        expression { params.Static_Check == true }
+      }
+      steps {
+        // Perform static code analysis here
+      }
+    }
+    
+    stage('QA Testing') {
+      when {
+        expression { params.QA == true }
+      }
+      steps {
+        // Perform QA testing here
+      }
+    }
+    
+    stage('Unit Testing') {
+      when {
+        expression { params.Unit_Test == true }
+      }
+      steps {
+        // Perform unit testing here
+      }
+    }
+    
+    stage('Send Email Notifications') {
+      when {
+        anyOf {
+          expression { currentBuild.result == 'SUCCESS' }
+          expression { currentBuild.result == 'FAILURE' }
+        }
+      }
+      steps {
+        if (params.Success_Email != '') {
+          mail to: params.Success_Email, subject: 'Build Successful', body: 'The build was successful!'
+        }
+        if (params.Failure_Email != '') {
+          mail to: params.Failure_Email, subject: 'Build Failed', body: 'The build failed!'
+        }
+      }
+    }
+  }
+}
