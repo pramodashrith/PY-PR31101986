@@ -8,6 +8,7 @@ pipeline {
     string(name: 'Success_Email', defaultValue: '', description: 'Enter the email address to notify on successful build')
     string(name: 'Failure_Email', defaultValue: '', description: 'Enter the email address to notify on failed build')
   }
+  // write a python code to fetch url from bitbucket
   
   stages {
     stage('Build') {
