@@ -14,7 +14,7 @@ output_dir = 'job_configs'
 repo_path = 'https://github.com/pramodashrith/PY-PR31101986.git'
 repo = git.Repo(repo_path)
 
-# Get list of Jenkins jobs
+# Get list of Jenkins jobspyt
 jobs_url = f'{jenkins_url}/api/json'
 response = requests.get(jobs_url, auth=(admin, admin))
 jobs = response.json()['jobs']
@@ -36,4 +36,4 @@ for job in jobs:
     repo.git.commit(m=f'Updated {job_name} job.xml')
 
 # Push changes to Git repository
-repo.git.push('origin', 'master')
+repo.git.push('origin', 'main')
