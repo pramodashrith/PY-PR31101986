@@ -3,20 +3,20 @@ import requests
 import git
 
 # Jenkins API URL and credentials
-jenkins_url = 'https://your-jenkins-server'
-username = 'your-username'
-password = 'your-password'
+jenkins_url = 'http://localhost:8080'
+username = 'admin'
+password = 'admin'
 
 # Directory to store job configurations
 output_dir = 'job_configs'
 
 # Clone or open the Git repository
-repo_path = 'path/to/your/git/repo'
+repo_path = 'https://github.com/pramodashrith/PY-PR31101986.git'
 repo = git.Repo(repo_path)
 
 # Get list of Jenkins jobs
 jobs_url = f'{jenkins_url}/api/json'
-response = requests.get(jobs_url, auth=(username, password))
+response = requests.get(jobs_url, auth=(admin, admin))
 jobs = response.json()['jobs']
 
 # Iterate through jobs
