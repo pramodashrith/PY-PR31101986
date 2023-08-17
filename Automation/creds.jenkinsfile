@@ -52,10 +52,10 @@ pipeline {
         }
       }
       steps {
-        if (params.Success_Email != '') {
+        if (params.Success_Email != 'pramodash86@gmail.com') {
           mail to: params.Success_Email, subject: 'Build Successful', body: 'The build was successful!'
         }
-        if (params.Failure_Email != '') {
+        if (params.Failure_Email != 'pramodash86@gmail.com') {
           mail to: params.Failure_Email, subject: 'Build Failed', body: 'The build failed!'
         }
       }
