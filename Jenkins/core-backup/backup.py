@@ -1,6 +1,8 @@
 import os
 import requests
-import git
+import github
+
+
 
 # Jenkins API URL and credentials
 jenkins_url = 'http://localhost:8080'
@@ -16,7 +18,7 @@ repo = git.Repo(repo_path)
 
 # Get list of Jenkins jobspyt
 jobs_url = f'{jenkins_url}/api/json'
-response = requests.get(jobs_url, auth=(admin, admin))
+response = requests.get(jobs_url, auth=(username, password))
 jobs = response.json()['jobs']
 
 # Iterate through jobs
