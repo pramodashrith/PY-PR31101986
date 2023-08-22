@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     def configFiles = sh(script: "python3 Jenkins/core-backup/jk.py", returnStdout: true).trim()
-                  
+                    sh "${configFiles}"
                     }
                 }
             }
