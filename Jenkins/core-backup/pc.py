@@ -2,7 +2,7 @@ import os
 
 def find_config_files(root_folder):
     config_files = []
-    for folder, -, files in os.walk(root_folder):
+    for folder, _, files in os.walk(root_folder):
         for file in files:
             if file in files:
                 if file == "config.xml":
