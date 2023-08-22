@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    triggers {
+        cron('30 8 * * *') // Daily at 12:00 PM
+    }
+
+    stages {
+        stage('Run Pip Install'){
+            steps{
+                script {
+                    sh """
+                        pip install -r Jenkins/core-backup/requirements.txt
+                    """
+                }
+            }
+
+        }
+        stage('List Job Configs') {
+            steps {
+                script {
+                    def configFiles = sh(script: "python3 Jenkins/core-backup/pc.py", returnStdout: true).trim()
+                    def configFileList = configFiles.split('\n')
+                    echo "Found ${configFileList.size()} config.xml files:"
+                    configFileList.each { configFile ->
+                        echo configFile
+                    }
+                }
+            }
+        }
+    }
+}
