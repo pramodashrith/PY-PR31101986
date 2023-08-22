@@ -10,7 +10,7 @@ def find_config_files(root_folder):
         return config_files
 
 if __name__ == "__main__":
-    root_folder = ""
+    root_folder = "http://localhost:8080/job/config/"
     config_files = find_config_files(root_folder)
     
     for file in config_files:
