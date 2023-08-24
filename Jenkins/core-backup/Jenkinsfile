@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    triggers {
+        cron('@daily')
+    }
+    stages {
+        stage('Backup Jobs') {
+            steps {
+                script {
+                    sh 'curl -X POST http://localhost:8080/job/config/config.xml -u admin:1135a5c0ac6fdf89ac2b3107ef070ee2b1 -o config_config.xml'
+                    sh 'curl -X POST http://localhost:8080/job/config/config.xml -u admin:1135a5c0ac6fdf89ac2b3107ef070ee2b1 -o config_config.xml'
+                }
+            }
+        }
+    }
+}

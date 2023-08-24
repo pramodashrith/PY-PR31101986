@@ -8,7 +8,7 @@ USERNAME = "admin"
 API_TOKEN = "1135a5c0ac6fdf89ac2b3107ef070ee2b1"
 
 # GitHub repository information
-GITHUB_TOKEN = "PY-PR31101986"
+GITHUB_TOKEN = "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"
 GITHUB_REPO_OWNER = "pramodashrith"
 GITHUB_REPO_NAME = "PY-PR31101986"
 GITHUB_REPO_BRANCH = "main"
@@ -58,9 +58,16 @@ def create_jenkinsfile():
 
 def update_github_repo():
     g = Github(GITHUB_TOKEN)
-    repo = g.get_repo(f"{GITHUB_REPO_OWNER}/{GITHUB_REPO_NAME}")
+    repo = g.get_repo(f'{GITHUB_REPO_OWNER}/{GITHUB_REPO_NAME}')
     repo_contents = repo.get_contents("", ref=GITHUB_REPO_BRANCH)
+    branch = repo.get_branch(GITHUB_REPO_BRANCH)
 
+    # Create a new commit with the file change
+    commit_message = "Update file via Python script"
+    repo.create_git_commit(commit_message, repo_contents, BACKUP_DIR, [branch.commit])
+
+    # Push the commit to the repository
+    repo.get_git_ref(f"heads/{GITHUB_REPO_BRANCH}").edit(commit_message.sha)
     with open(os.path.join(BACKUP_DIR, "Jenkinsfile"), "r") as jenkinsfile:
         jenkinsfile_content = jenkinsfile.read()
 
@@ -68,8 +75,8 @@ def update_github_repo():
         "Jenkinsfile",
         "Automated daily backup Jenkinsfile",
         jenkinsfile_content,
-        branch=GITHUB_REPO_BRANCH,
-        sha=repo_contents.sha,
+        commit_message,
+        branch
     )
 
 if __name__ == "__main__":
