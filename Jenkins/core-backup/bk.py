@@ -2,12 +2,15 @@ import logging
 import requests
 import os
 from github import Github
+import git
 
 # Logging configuration
 logging.basicConfig(level=logging.INFO)
 
 # Jenkins server
-SERVER = 'http://localhost:8080'
+JENKINS_URL = "http://localhost:8080/"
+USERNAME = "admin"
+API_TOKEN = "1135a5c0ac6fdf89ac2b3107ef070ee2b1"
 
 # GitHub repository and credentials
 REPO_URL = 'https://github.com/pramodashrith/PY-PR31101986.git'
@@ -15,11 +18,14 @@ USERNAME = 'pramodashrith'
 PASSWORD = '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'
 
 # Function to get the list of Jenkins jobs
-def get_jobs():
-  url = 'http://%s/api/json?pretty=true' % SERVER
-  response = requests.get(url)
-  data = response.json()
-  return data['jobs']
+def get_jobs(job_name):
+  config_url = f"{JENKINS_URL}/job/{job_name}/config.xml"
+  response = requests.get(config_url, auth=(USERNAME, API_TOKEN))
+  if response.status_code == 200:
+      return response.text
+  else:
+      return None
+  
 
 # Function to backup the config.xml of a Jenkins job
 def backup_job(name):
@@ -43,8 +49,8 @@ def commit_file(file, message):
   repo.index.commit(message)
   repo.push()
 
-def main():
-  jobs = get_jobs()
+def main(job_name):
+  jobs = get_jobs(job_name)
   for job in jobs:
     name = job['name']
     folder = job['folder']

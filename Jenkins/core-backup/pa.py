@@ -8,10 +8,10 @@ USERNAME = "admin"
 API_TOKEN = "1135a5c0ac6fdf89ac2b3107ef070ee2b1"
 
 # GitHub repository information
-GITHUB_TOKEN = "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"
+GITHUB_TOKEN = "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"
 GITHUB_REPO_OWNER = "pramodashrith"
 GITHUB_REPO_NAME = "PY-PR31101986"
-GITHUB_REPO_BRANCH = "main"
+GITHUB_REPO_BRANCH = "test"
 
 # Directory to store backup
 BACKUP_DIR = "Jenkins/core-backup"
